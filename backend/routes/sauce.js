@@ -10,6 +10,9 @@ router.post('/', auth, multer, sauceCtrl.createSauce);
 //modification d'une sauce
 router.put('/:id', auth, multer, sauceCtrl.modifySauce);
 
+//suppression d'une sauce selon son id
+router.delete('/:id', auth, sauceCtrl.deleteSauce);
+
 //affichage de toutes les sauces
 router.get('/', auth, sauceCtrl.getAllSauces);
 
