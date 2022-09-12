@@ -1,6 +1,7 @@
 const Sauce = require('../models/sauce');
 const fs = require('fs');
 
+//fonction qui permet de créer une sauce à partir du body de la requête et du modèle sauce établit
 exports.createSauce = (req, res, next) => {
     const sauceObject = JSON.parse(req.body.sauce);
     delete sauceObject._id;
@@ -21,4 +22,11 @@ exports.getAllSauces = (req, res, next) => {
     Sauce.find()
       .then(sauces => res.status(200).json(sauces))
       .catch(error => res.status(400).json({ error }));
+};
+
+// fonction qui affiche une sauce selon l'id recueillis dans la requête
+exports.getOneSauce = (req, res, next) => {
+    Sauce.findOne({ _id: req.params.id })
+      .then(sauce => res.status(200).json(sauce))
+      .catch(error => res.status(404).json({ error }));
   };
