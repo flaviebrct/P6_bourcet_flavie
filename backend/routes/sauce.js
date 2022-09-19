@@ -19,4 +19,7 @@ router.get('/', auth, sauceCtrl.getAllSauces);
 //affichage d'une sauce selon son id
 router.get('/:id', auth, sauceCtrl.getOneSauce);
 
+//fonction like ou dislike d'une sauce
+router.post('/:id/like', auth, sauceCtrl.likeSauce);
+
 module.exports = router;
