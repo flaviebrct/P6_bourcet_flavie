@@ -13,6 +13,7 @@ const storage = multer.diskStorage({
     destination: (req, file, callback) => {
         callback(null, 'images');
     },
+    //renomage des images en retirant les espaces, les points puis en ajoutant la méthode date.now qui permet d'avoir un nom unique pour toutes les images
     filename: (req, file, callback) => {
         var name = file.originalname.split(' ').join('_');
         name = file.originalname.split('.')[0];

@@ -1,9 +1,9 @@
 var passwordValidator = require('password-validator');
 
-// Create a schema
+//Création d'un schema de mdp
 var passwordSchema = new passwordValidator();
 
-// Add properties to it
+//Ajout des propriétés nécessaires
 passwordSchema
 .min(6, 'Le mot de passe doit contenir au moins 6 caractères.')           // Min 6 caractères
 .max(15, 'Le mot de passe doit contenir moins de 15 caractères.')         // Max 15 caractères
@@ -13,6 +13,7 @@ passwordSchema
 .has().not().spaces();                                                    // Ne doit pas avoir d'espaces
 
 module.exports = (req, res, next) => {
+    //si le mdp correspond aux critères du schema
     if (passwordSchema.validate(req.body.password)) {
         next();
     } else {

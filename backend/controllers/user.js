@@ -4,6 +4,7 @@ const User = require('../models/User');
 
 const salt = parseInt(process.env.SALT)
 
+//fonction qui permet de créer un compte utilisateur et de venir salter et hasher le mdp pour la sécurité
 exports.signup = (req, res, next) => {
     bcrypt.genSalt(salt)
         .then(saltRes => {
@@ -21,14 +22,17 @@ exports.signup = (req, res, next) => {
         })
 };
 
+//fonction qui permet la connexion en vérifiant que l'user existe et que le mdp est identique à celui dans la base de donnée
 exports.login = (req, res, next) => {
     User.findOne({ email: req.body.email })
         .then(user => {
+            //si l'utilisateur n'existe pas
             if (!user) {
                 return res.status(401).json({ message: 'Paire login/mot de passe incorrecte' });
             }
             bcrypt.compare(req.body.password, user.password)
                 .then(valid => {
+                    //si le mdp n'est pas correct 
                     if (!valid) {
                         return res.status(401).json({ message: 'Paire login/mot de passe incorrecte' });
                     }
