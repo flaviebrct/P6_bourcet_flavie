@@ -32,11 +32,15 @@ exports.modifySauce = (req, res, next) => {
             if (sauce.userId != req.auth.userId) {
                 res.status(401).json({ message: 'Not authorized' });
             } else {
-                fs.unlink(`images/${filename}`, (error) => {
-                    if (error) throw error
-                });
                 Sauce.updateOne({ _id: req.params.id }, { ...sauceObject, _id: req.params.id })
-                    .then(() => res.status(200).json({ message: 'Sauce modifiée !' }))
+                    .then(() => {
+                        if (req.file != undefined) {
+                            fs.unlink(`images/${filename}`, (error) => {
+                                if (error) throw error
+                            })
+                        }
+                        res.status(200).json({ message: 'Sauce modifiée !' })
+                    })
                     .catch(error => res.status(401).json({ error }));
             }
         })
